@@ -7,6 +7,7 @@ pipeline {
                 echo 'Etape de construction en cours ...'
             // Ici, vous pouvez ajouter les commandes pour compiler votre projet
             // Par exemple : npm run build
+                echo "Exécution du build ${env.BUILD_ID} sur ${env.JENKINS_URL}"
             }
         }
 
