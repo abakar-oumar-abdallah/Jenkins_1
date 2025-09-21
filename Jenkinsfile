@@ -22,7 +22,7 @@ pipeline {
                 ok "Oui, déployons."
                 submitter "admin, devops"
                 parameters {
-                    string(name: 'VERSION', defaulValue: 'latest', description: 'Quelle version souhaitez-vous déployer ?')
+                    string(name: 'VERSION', defaultValue: 'latest', description: 'Quelle version souhaitez-vous déployer ?')
                 }
             }
 
