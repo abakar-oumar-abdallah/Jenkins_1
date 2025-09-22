@@ -81,7 +81,7 @@ pipeline {
 
         stage("Deploiment") {
             options {
-                timeout (time: 1, unit: 'MINUTE')
+                timeout (time: 1, unit: 'HOURS')
             }
             steps {
                 echo "Le déployement est en cours ..."
