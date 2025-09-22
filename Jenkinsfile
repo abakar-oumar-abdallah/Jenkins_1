@@ -80,7 +80,14 @@ pipeline {
         }
 
         stage("Deploiment") {
-            
+            input {
+                message "Voulez-vous déployer en production ?"
+                ok "Oui, déployons."
+                submitter "admin, devops, stagiaire"
+                parameters {
+                    string(name: "VERSION", defaultValue: "latest", description: "Quelle version souhaitez-vous dép^loyer ?")
+                }
+            }
             options {
                 timeout (time: 1, unit: 'HOURS')
             }
