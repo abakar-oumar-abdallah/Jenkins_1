@@ -80,6 +80,7 @@ pipeline {
         }
 
         stage("Deploiment") {
+            
             options {
                 timeout (time: 1, unit: 'HOURS')
             }
@@ -92,7 +93,7 @@ pipeline {
 
     post {
         always {
-            echo "Cette étape est exécutée."
+            echo "Cette étape est toujours exécutée."
         }
 
         failure {
