@@ -77,7 +77,7 @@ pipeline {
 
         stage("Deploiment") {
             options {
-                retry(2)
+                timestamp(time: 1, unit: "HOURS")
             }
             steps {
                 echo "Le déployement est en cours ..."
