@@ -85,7 +85,7 @@ pipeline {
                 ok "Oui, déployons."
                 submitter "admin, devops, stagiaire"
                 parameters {
-                    string(name: "VERSION", defaultValue: "latest", description: "Quelle version souhaitez-vous dép^loyer ?")
+                    string(name: "VERSION", defaultValue: "latest", description: "Quelle version souhaitez-vous déployer ?")
                 }
             }
             options {
