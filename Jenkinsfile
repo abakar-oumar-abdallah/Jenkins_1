@@ -48,6 +48,10 @@ pipeline {
 
     agent any 
 
+    triggers {
+        pollSCM('* * * * *')
+    }
+
     parameters {
         string(name: "PERSONNE", defaultValue: "M. Jenkins", description: "A qui devrais-je dire bonjour ?")
         text(name: "BIOGRAPHIE", defaultValue: "", description: "Entrez des informations")
@@ -77,13 +81,27 @@ pipeline {
 
         stage("Deploiment") {
             options {
-                timeout (time: 1, unit: "SECONDE")
+                timeout (time: 1, unit: "SECOND")
             }
             steps {
                 echo "Le déployement est en cours ..."
             }
         }
 
+    }
+
+    post {
+        always {
+            echo "Cette étape est exécutée."
+        }
+
+        failure {
+            echo "Cette étape est exécutée en cas d'erreur."
+        }
+
+        success {
+            echo "Cette étape est exécutée en cas du succès."
+        }
     }
 
 }
