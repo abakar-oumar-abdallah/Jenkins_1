@@ -60,11 +60,11 @@ pipeline {
 
         stage("Build") {
             steps {
-                echo "Bonjour ${PERSONNE}"
-                echo "Biographie ${BIOGRAPHIE}"
-                echo "Toggle ${TOGGLE}"
-                echo "Choix ${CHOIX}"
-                echo "Mot de passe ${MOT_DE_PASSE}"
+                echo "Bonjour: ${PERSONNE}"
+                echo "Biographie: ${BIOGRAPHIE}"
+                echo "Toggle: ${TOGGLE}"
+                echo "Choix: ${CHOIX}"
+                echo "Mot de passe: ${MOT_DE_PASSE}"
                 echo "Le build est en cours ..."
             }
         }
