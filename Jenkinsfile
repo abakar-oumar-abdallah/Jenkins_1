@@ -134,12 +134,12 @@ pipeline {
     agent any
     
     parameters {
-        booleanParam(name: 'RUN_BUILD', value: false)
+        booleanParam(name: 'RUN_BUILD', defaultValue: false)
     }
 
     stages {
 
-        satge('Build') {
+        stage('Build') {
             when {
                 expression (params.RUN_BUILD)
             }
