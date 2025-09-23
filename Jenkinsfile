@@ -81,10 +81,6 @@ pipeline {
 
         stage("Deploiment") {
 
-            when {
-                branch 'main'
-            }
-            
             input {
                 message "Voulez-vous déployer en production ?"
                 ok "Oui, déployons."
@@ -97,6 +93,11 @@ pipeline {
             options {
                 timeout (time: 1, unit: 'HOURS')
             }
+
+            when {
+                branch 'main'
+            }
+
             steps {
                 echo "Le déployement est en cours ..."
             }
