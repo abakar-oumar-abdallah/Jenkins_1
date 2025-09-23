@@ -82,7 +82,7 @@ pipeline {
         stage("Deploiment") {
 
             when {
-                branch 'master'
+                branch 'main'
             }
             
             input {
