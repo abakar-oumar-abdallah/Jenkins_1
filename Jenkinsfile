@@ -79,7 +79,12 @@ pipeline {
             }
         }
 
-        stage("Deploiment") {
+        stage("Deploiment") 
+
+            when {
+                branch 'master'
+            }
+            
             input {
                 message "Voulez-vous déployer en production ?"
                 ok "Oui, déployons."
@@ -88,12 +93,14 @@ pipeline {
                     string(name: "VERSION", defaultValue: "latest", description: "Quelle version souhaitez-vous déployer ?")
                 }
             }
+
             options {
                 timeout (time: 1, unit: 'HOURS')
             }
             steps {
                 echo "Le déployement est en cours ..."
             }
+
         }
 
     }
