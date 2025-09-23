@@ -95,7 +95,7 @@ pipeline {
             }
 
             when {
-                branch 'master'
+                branch 'production'
             }
 
             steps {
