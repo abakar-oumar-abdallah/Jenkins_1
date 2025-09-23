@@ -141,7 +141,7 @@ pipeline {
 
         stage('Build') {
             when {
-                expression (return params.RUN_BUILD)
+                expression {params.RUN_BUILD}
             }
 
             steps {
