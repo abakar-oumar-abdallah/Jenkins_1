@@ -44,79 +44,111 @@
 //     }
 // }
 
+
+
+
+
+// Pipeline ci-dessous est intéressant, je pourrais revenir dessus à tout moment 
+
+// pipeline {
+
+//     agent any 
+
+//     triggers {
+//         pollSCM('* * * * *')
+//     }
+
+//     parameters {
+//         string(name: "PERSONNE", defaultValue: "M. Jenkins", description: "A qui devrais-je dire bonjour ?")
+//         text(name: "BIOGRAPHIE", defaultValue: "", description: "Entrez des informations")
+//         booleanParam(name: "TOGGLE", defaultValue: "true", description: "Activez cette valeur")
+//         choice(name: "CHOIX", choices: ["Un", "Deux", "Trois", "Quatre", "Cinq"], description: "Veuillez choisir")
+//         password(name: "MOT_DE_PASSE", defaultValue: "Abakar1998.", description: "Entrez un mot de passe")
+//     }
+
+//     stages {
+
+//         stage("Build") {
+//             steps {
+//                 echo "Bonjour: ${PERSONNE}"
+//                 echo "Biographie: ${BIOGRAPHIE}"
+//                 echo "Toggle: ${TOGGLE}"
+//                 echo "Choix: ${CHOIX}"
+//                 echo 'Mot de passe: ${MOT_DE_PASSE}'
+//                 echo "Le build est en cours ..."
+//             }
+//         }
+
+//         stage("Tests") {
+//             steps {
+//                 echo "Le test est en cours ..."
+//             }
+//         }
+
+//         stage("Deploiment") {
+
+//             when {
+//                 branch 'main'
+//             }
+
+//             input {
+//                 message "Voulez-vous déployer en production ?"
+//                 ok "Oui, déployons."
+//                 submitter "admin, devops, stagiaire"
+//                 parameters {
+//                     string(name: "VERSION", defaultValue: "latest", description: "Quelle version souhaitez-vous déployer ?")
+//                 }
+//             }
+
+//             options {
+//                 timeout (time: 1, unit: 'HOURS')
+//             }
+
+//             steps {
+//                 echo "Le déployement est en cours ..."
+//             }
+
+//         }
+
+//     }
+
+//     post {
+//         always {
+//             echo "Cette étape est toujours exécutée."
+//         }
+
+//         failure {
+//             echo "Cette étape est exécutée en cas d'erreur."
+//         }
+
+//         success {
+//             echo "Cette étape est exécutée en cas du succès."
+//         }
+//     }
+// }    
+
+
+
 pipeline {
 
-    agent any 
-
-    triggers {
-        pollSCM('* * * * *')
-    }
-
+    agent any
+    
     parameters {
-        string(name: "PERSONNE", defaultValue: "M. Jenkins", description: "A qui devrais-je dire bonjour ?")
-        text(name: "BIOGRAPHIE", defaultValue: "", description: "Entrez des informations")
-        booleanParam(name: "TOGGLE", defaultValue: "true", description: "Activez cette valeur")
-        choice(name: "CHOIX", choices: ["Un", "Deux", "Trois", "Quatre", "Cinq"], description: "Veuillez choisir")
-        password(name: "MOT_DE_PASSE", defaultValue: "Abakar1998.", description: "Entrez un mot de passe")
+        booleanParam(name: 'RUN_BUILD', value: false)
     }
 
     stages {
 
-        stage("Build") {
-            steps {
-                echo "Bonjour: ${PERSONNE}"
-                echo "Biographie: ${BIOGRAPHIE}"
-                echo "Toggle: ${TOGGLE}"
-                echo "Choix: ${CHOIX}"
-                echo 'Mot de passe: ${MOT_DE_PASSE}'
-                echo "Le build est en cours ..."
-            }
-        }
-
-        stage("Tests") {
-            steps {
-                echo "Le test est en cours ..."
-            }
-        }
-
-        stage("Deploiment") {
-
+        satge('Build') {
             when {
-                branch 'main'
-            }
-
-            input {
-                message "Voulez-vous déployer en production ?"
-                ok "Oui, déployons."
-                submitter "admin, devops, stagiaire"
-                parameters {
-                    string(name: "VERSION", defaultValue: "latest", description: "Quelle version souhaitez-vous déployer ?")
-                }
-            }
-
-            options {
-                timeout (time: 1, unit: 'HOURS')
+                expression (params.RUN_BUILD)
             }
 
             steps {
-                echo "Le déployement est en cours ..."
+                echo "L'exécution de la construction est définie sur vrai"
             }
-
         }
 
     }
 
-    post {
-        always {
-            echo "Cette étape est toujours exécutée."
-        }
-
-        failure {
-            echo "Cette étape est exécutée en cas d'erreur."
-        }
-
-        success {
-            echo "Cette étape est exécutée en cas du succès."
-        }
-    }
-}    
+}
