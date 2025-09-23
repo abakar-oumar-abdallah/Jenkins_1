@@ -134,7 +134,7 @@ pipeline {
     agent any
     
     parameters {
-        booleanParam(name: 'RUN_BUILD', defaultValue: false)
+        booleanParam(name: 'RUN_BUILD', defaultValue: true)
     }
 
     stages {
@@ -145,7 +145,7 @@ pipeline {
             }
 
             steps {
-                echo "L'exécution de la construction est définie sur vrai"
+                echo 'Run Build is true'
             }
         }
 
