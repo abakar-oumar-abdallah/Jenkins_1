@@ -79,7 +79,7 @@ pipeline {
             }
         }
 
-        stage("Deploiment") 
+        stage("Deploiment") {
 
             when {
                 branch 'master'
@@ -118,5 +118,4 @@ pipeline {
             echo "Cette étape est exécutée en cas du succès."
         }
     }
-
-}
+}    
