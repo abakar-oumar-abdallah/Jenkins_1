@@ -45,36 +45,62 @@
 // }
 
 
+// pipeline {
+
+//     agent none 
+
+//     stages {
+
+//         stage('Build et Test') {
+//             agent {label 'build'}
+//             steps {
+//                 echo "Construire et tester l'application"
+//             }
+//         }
+
+//         stage('Déploiement séquentiel') {
+//             agent {label 'deploy'}
+//             stages {
+//                 stage('Déploiement Dev') {
+//                     steps {
+//                         echo "Déploiement dans l'environnement de développement"
+//                     }
+//                 }
+
+//                 stage('Déploiement Staging') {
+//                     steps {
+//                         echo "Déploiement en environnement de pré-production"
+//                     }
+//                 }
+//             }
+//         }
+
+//     }
+
+// }
+
 pipeline {
-
-    agent none 
-
+    agent any
     stages {
-
         stage('Build et Test') {
-            agent {label 'build'}
             steps {
-                echo "Construire et tester l'application"
+                echo "Construire et tester l'application."
             }
         }
-
-        stage('Déploiement séquentiel') {
-            agent {label 'deploy'}
-            stages {
+        stage('Déploiement parallèle') {
+            failFast true
+            parallel {
                 stage('Déploiement Dev') {
                     steps {
-                        echo "Déploiement dans l'environnement de développement"
+                        echo "Déploiement en environnement de développement."
                     }
                 }
-
                 stage('Déploiement Staging') {
                     steps {
-                        echo "Déploiement en environnement de pré-production"
+                        echo "Déploiement en environnement de préproduction."
                     }
                 }
             }
         }
-
     }
-
 }
