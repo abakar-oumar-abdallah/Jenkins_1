@@ -37,7 +37,7 @@
 //         //     steps {
 //         //         echo 'Etape de déploiement en cours ...'
 //         //         // Ici, vous pouvez ajouter les commandes pour déployer votre projet
-//         //         // Par exemple : sh 'make deploy'
+//         //         // Par exemple : sh 'make deploy' Important
 //         //     }
 //         // }
         
@@ -45,107 +45,33 @@
 // }
 
 
-
-
-
-// Pipeline ci-dessous est intéressant, je pourrais revenir dessus à tout moment 
-
-// pipeline {
-
-//     agent any 
-
-//     triggers {
-//         pollSCM('* * * * *')
-//     }
-
-//     parameters {
-//         string(name: "PERSONNE", defaultValue: "M. Jenkins", description: "A qui devrais-je dire bonjour ?")
-//         text(name: "BIOGRAPHIE", defaultValue: "", description: "Entrez des informations")
-//         booleanParam(name: "TOGGLE", defaultValue: "true", description: "Activez cette valeur")
-//         choice(name: "CHOIX", choices: ["Un", "Deux", "Trois", "Quatre", "Cinq"], description: "Veuillez choisir")
-//         password(name: "MOT_DE_PASSE", defaultValue: "Abakar1998.", description: "Entrez un mot de passe")
-//     }
-
-//     stages {
-
-//         stage("Build") {
-//             steps {
-//                 echo "Bonjour: ${PERSONNE}"
-//                 echo "Biographie: ${BIOGRAPHIE}"
-//                 echo "Toggle: ${TOGGLE}"
-//                 echo "Choix: ${CHOIX}"
-//                 echo 'Mot de passe: ${MOT_DE_PASSE}'
-//                 echo "Le build est en cours ..."
-//             }
-//         }
-
-//         stage("Tests") {
-//             steps {
-//                 echo "Le test est en cours ..."
-//             }
-//         }
-
-//         stage("Deploiment") {
-
-//             when {
-//                 branch 'main'
-//             }
-
-//             input {
-//                 message "Voulez-vous déployer en production ?"
-//                 ok "Oui, déployons."
-//                 submitter "admin, devops, stagiaire"
-//                 parameters {
-//                     string(name: "VERSION", defaultValue: "latest", description: "Quelle version souhaitez-vous déployer ?")
-//                 }
-//             }
-
-//             options {
-//                 timeout (time: 1, unit: 'HOURS')
-//             }
-
-//             steps {
-//                 echo "Le déployement est en cours ..."
-//             }
-
-//         }
-
-//     }
-
-//     post {
-//         always {
-//             echo "Cette étape est toujours exécutée."
-//         }
-
-//         failure {
-//             echo "Cette étape est exécutée en cas d'erreur."
-//         }
-
-//         success {
-//             echo "Cette étape est exécutée en cas du succès."
-//         }
-//     }
-// }    
-
-
-
 pipeline {
 
-    agent any
-    
-    parameters {
-        booleanParam(name: 'RUN_BUILD', defaultValue: false)
-    }
+    agent none 
 
     stages {
 
-        stage('Build') {
-            when {
-                expression {params.RUN_BUILD}
-            }
-
+        stage('Build et Test') {
+            agent {label 'build'}
             steps {
-                echo "L'exécution de la construction est définie sur vrai"
+                echo "Construire et tester l'application"
+            }
+        }
+
+        stage('Déploiement séquentiel') {
+            agent {label 'deploy'}
+            stages {
+                stage('Déploiement Dev') {
+                    steps {
+                        echo "Déploiement dans l'environnement de développement"
+                    }
+                }
+
+                stage('Déploiement Staging') {
+                    steps {
+                        echo "Déploiement en environnement de pré-production"
+                    }
+                }
             }
         }
 
