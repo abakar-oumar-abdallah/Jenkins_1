@@ -171,4 +171,18 @@ pipeline {
         }
     }
 
+    post {
+        always {
+            echo "Cette étape est toujours exécutée"
+        }
+
+        failure {
+            echo "Cette étape est exécutée en cas d'erreur"
+        }
+
+        success {
+            echo "Cette étape est exécutée en cas du succès"
+        }
+    }
+
 }
