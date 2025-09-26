@@ -149,7 +149,7 @@ pipeline {
                 }
 
                 stages {
-                    stage(Build) {
+                    stage('Build') {
                         steps {
                             echo "Construire pour ${ PLATFORM } - ${ BROWSER }"
                         }
